@@ -1,59 +1,238 @@
-import tkinter as tk
-Fgame = tk.Tk()
-height = 500
-width = 500
-def sum_guesses(previous_guesses:list = None) -> str:
-    aggregate_word = ""
-    if previous_guesses:
-        for chars in zip(*previous_guesses):
-            aggregate_word += sorted(set(chars))[-1]
-    return aggregate_word
-words = ['aggro', 'flank', 'flick', 'tiles', 'baths', 'cubby', 'swing', 'entry', 'round', 'match', 'force', 'haven', 'molly', 'creds', 'angle', 'split', 'sewer', 'plant', 'smoke', ]
+import tkinter
 
-def guess(entry):
-    print("Thisd")
+from getpass import getpass
 
 
 
 
+height = 600 #height
+width = 500 #width
+
+def confirm():
+    global confirm1
+    confirm1 = tkinter.Toplevel()
+    confirm1.geometry('500x500')
+    confirm1.title("Confirm")
+    canvas1 = tkinter.Canvas(confirm1, bg='gray', height=500, width=500)
+    canvas1.pack()
+
+    button = tkinter.Button(canvas1, text='Yes', command=lambda: Yes)
+    button.pack()
+    button1 = tkinter.Button(canvas1, text='No', command=confirm.withdraw)
+    button1.pack()
+    confirm1.mainloop()
+
+def main_page():
+    global main_page
+    main_page = tkinter.Toplevel()
+    main_page.title("Menu")
+    f = open("sample.txt", "r")
+    g = open("sample1.txt", "r")
+    read = f.read()
+    read1 = g.read()
+    canvas = tkinter.Canvas(main_page, bg='gray', height=720, width=1280)
+    canvas.pack()
+
+    photo = tkinter.PhotoImage(file='7shi to kroni.png')
+    photo_label = tkinter.Label(main_page, image=photo)
+    photo_label.place(relwidth=1, relheight=1)
+
+    button = tkinter.Button(main_page, text='Log out', command=lambda: Yes)
+    button.place(relx=0, rely=0)
+
+    main_page.mainloop()
+def Yes():
+    confirm1.withdraw()
+    main_page.withdraw()
+    main.deiconify()
 
 
-mainframe = tk.Canvas(Fgame, height=height, width=width, bg='yellow')
-mainframe.pack()
-label = tk.Label(mainframe, text='5 LETTER GUESS THE WORD', bg='red')
-label.place(relx=0.25, rely=0.1, relwidth=0.5, relheight=0.1)
-label1 = tk.Label(mainframe, text='1', bg='green', font='80')
-label1.place(relx=0.25, rely=0.22, relwidth=0.5, relheight=0.38)
 
-entry = tk.Entry(mainframe, bg='white', )
-entry.place(relx=0.3, rely=0.62,relwidth=0.4, relheight=0.07)
-
-fbutton = tk.Button(mainframe,text="yeah boi", pady=-10, bg="blue", command=lambda: guess(entry.get()))
-fbutton.place(relx=0.4, rely=0.7, relwidth=0.2, relheight=0.06)
+def Login_GUI():
+    global main
+    main = tkinter.Tk()
+    main.title('Log in Form')
 
 
+    def Button1():
+        createacc()
 
+    def Button(Enter, Enter1):
 
-for word in words:
-    hiddenl = []
-    while True:
-        print(sum_guesses(hiddenl))
-        guess = input("Guess the Word! : ")
-        guessl = [letter for letter in guess]
-        wordl = [letter for letter in word]
-        if guessl == wordl:
-            label1['text']= (f"Well Done! The Word is {guessl}")
-            break
+        f = open("sample.txt", "r")
+        g = open("sample1.txt", "r")
+        read = f.read()
+        read1 = g.read()
+        if len(Enter) < 8 or len(Enter1) < 4:
+            label3['text'] = "This Account does not Exist!"
         else:
-            label1['text']=("Try Again!")
-            guessed = [x for x in guessl if x in wordl]
-            hidden = ''
-            for letter in word:
-                if letter in guessed:
-                    hidden = hidden + letter
+            if Enter not in read and Enter1 not in read1:
+                label3['text'] = "This Account does not Exist!"
+            else:
+                label3['text'] = "Welcome!" + '\n' + Enter.capitalize()
+                main.withdraw()
+                main_page()
+
+
+
+    canvas = tkinter.Canvas(main, bg='gray', height=height, width=width)
+    canvas.pack()
+
+    photo = tkinter.PhotoImage(file='7shi to kroni.png')
+    photo_label = tkinter.Label(main, image=photo)
+    photo_label.place(relwidth=1, relheight=1)
+
+    framework = tkinter.Frame(main, bg='#80c1ff', bd=5)
+    framework.place(relx=0.5, rely=0.1, relwidth=0.8, relheight=0.05, anchor='n')
+
+    label1 = tkinter.Label(framework, text="Username:")
+    label1.place(relwidth=0.2, relheight=1)
+
+    Enter = tkinter.Entry(framework, font=30, bg='gray')
+    Enter.place(relwidth=0.8, relheight=1, relx=0.2)
+
+    Second_framework = tkinter.Frame(main, bg='#80c1ff', bd=5)
+    Second_framework.place(relx=0.5, rely=0.15, relwidth=0.8, relheight=0.05, anchor='n')
+
+    label2 = tkinter.Label(Second_framework, text="Password:")
+    label2.place(relwidth=0.2, relheight=1)
+
+    Enter1 = tkinter.Entry(Second_framework, font=30, bg='gray',  show="*")
+    Enter1.place(relwidth=0.8, relheight=1, relx=0.2)
+
+    third_framework = tkinter.Frame(main, bg='#80c1ff', bd=3)
+    third_framework.place(relx=0.5, rely=0.2, relwidth=0.8, relheight=0.05, anchor='n')
+
+    button = tkinter.Button(third_framework, text="Log In", anchor='n', activeforeground='blue', command=lambda: Button(Enter.get(), Enter1.get()))
+    button.place(relwidth=0.3, relheight=1, relx=0.15)
+
+    button1 = tkinter.Button(third_framework, text="Create Account!", anchor='n', activeforeground='blue', command=lambda: Button1())
+    button1.place(relwidth=0.3, relheight=1, relx=0.55)
+
+    fourth_framework = tkinter.Frame(main, bg='#80c1ff', bd=5)
+    fourth_framework.place(relx=0.5, rely=0.25, relwidth=0.8, relheight=0.65, anchor='n')
+
+    label3 = tkinter.Label(fourth_framework, bg='gray', font='40',)
+    label3.place(relwidth=1, relheight=1)
+
+
+    main.mainloop()
+
+
+
+
+
+
+
+def createacc():
+    main1 = tkinter.Toplevel()
+    main1.title('Registration Form')
+
+
+
+
+    def create_button(entry, entry1, entry2, entry3):
+        if entry == entry1:
+            f = open("sample.txt", "r")
+            read = f.read()
+            if len(entry) < 8:
+                flabel['text'] = ("Username should be \n8 or more characters long!")
+            else:
+                if entry and entry1 not in read:
+                    f = open("sample.txt", "r")
+                    f.close()
+                    if entry2 == entry3:
+                        g = open("sample1.txt", "r")
+                        read1 = g.read()
+                        if len(entry2) < 4:
+                            flabel['text'] = ("Password should be 4 or more characters long")
+                        else:
+                            if entry2 and entry3 not in read1:
+                                f = open("sample.txt", "a")
+                                f.write("\n")
+                                f.write(entry)
+                                f.close()
+                                g = open("sample1.txt", "a")
+                                g.write("\n")
+                                g.write(entry2)
+                                g.close()
+                                flabel['text'] = "Account Successfully Created"
+
+                            else:
+                                f = open("sample.txt", "a")
+                                f.write("\n")
+                                f.write(entry)
+                                f.close()
+                                g = open("sample1.txt", "r")
+                                g.read()
+                                g.close()
+                                flabel['text'] = "Account Successfully Created"
+
+                    else:
+                        flabel['text'] = "Password is Incorrect!"
                 else:
-                    hidden = hidden + '*'
-            hiddenl.append(hidden)
+                    flabel['text'] = "Account Already Exist!"
+        else:
+            flabel['text'] = "Username is Incorrect!"
 
-Fgame.mainloop()
+    canvas1 = tkinter.Canvas(main1, bg='gray', height=height, width=width)
+    canvas1.pack()
 
+    photo1 = tkinter.PhotoImage(file='pyimage2.png')
+    photo_label1 = tkinter.Label(main1, image=photo1)
+    photo_label1.place(relwidth=1, relheight=1)
+
+    framework = tkinter.Frame(main1, bg='#80c1ff', bd=10)
+    framework.place(relx=0.5, rely=0, relwidth=1, relheight=1, anchor='n')
+
+    labelcreate = tkinter.Label(main1, text="Create Your Account!")
+    labelcreate.place(rely=0.1, relx=0.39)
+
+    framework1 = tkinter.Frame(main1, bg='#80c1ff', bd=1)
+    framework1.place(relx=0.5, rely=0.15, relwidth=1, relheight=0.1, anchor='n')
+
+    ulabel = tkinter.Label(framework1, bg='white', text="Enter Your Username")
+    ulabel.place(relx=0.25, rely=0, relwidth=0.5, relheight=0.5)
+
+    entry = tkinter.Entry(framework1, bg='gray')
+    entry.place(relx=0.25, rely=0.5, relwidth=0.5, relheight=0.5)
+
+    framework2 = tkinter.Frame(main1, bg='#80c1ff', bd=1)
+    framework2.place(relx=0.5, rely=0.25, relwidth=1, relheight=0.1, anchor='n')
+
+    ulabel1 = tkinter.Label(framework2, bg='white', text="Confirm Your Username")
+    ulabel1.place(relx=0.25, rely=0, relwidth=0.5, relheight=0.5)
+
+    entry1 = tkinter.Entry(framework2, bg='gray')
+    entry1.place(relx=0.25, rely=0.5, relwidth=0.5, relheight=0.5)
+
+    framework3 = tkinter.Frame(main1, bg='#80c1ff', bd=1)
+    framework3.place(relx=0.5, rely=0.35, relwidth=1, relheight=0.1, anchor='n')
+
+    ulabel2 = tkinter.Label(framework3, bg='white', text="Enter Your Password")
+    ulabel2.place(relx=0.25, rely=0, relwidth=0.5, relheight=0.5)
+
+    entry2 = tkinter.Entry(framework3, bg='gray', show="*")
+    entry2.place(relx=0.25, rely=0.5, relwidth=0.5, relheight=0.5)
+
+    framework4 = tkinter.Frame(main1, bg='#80c1ff', bd=1)
+    framework4.place(relx=0.5, rely=0.45, relwidth=1, relheight=0.1, anchor='n')
+
+    ulabel3 = tkinter.Label(framework4, bg='white', text="Confirm Your Password")
+    ulabel3.place(relx=0.25, rely=0, relwidth=0.5, relheight=0.5)
+
+    entry3 = tkinter.Entry(framework4, bg='gray', show="*")
+    entry3.place(relx=0.25, rely=0.5, relwidth=0.5, relheight=0.5)
+
+    button = tkinter.Button(main1, text="Create Account", activeforeground='blue', command=lambda: create_button(entry.get(), entry1.get(), entry2.get(), entry3.get()))
+    button.place(rely=0.55, relx=0.41)
+
+    pbutton = tkinter.Button(main1, text="Proceed to Log In", activeforeground='blue', command=main1.destroy)
+    pbutton.place(rely=0.6, relx=0.4)
+
+    flabel = tkinter.Label(framework, bg='gray', bd=2, font='30')
+    flabel.place(relx=0.25, rely=0.65, relwidth=0.5, relheight=0.1)
+
+    main1.mainloop()
+
+Login_GUI()
