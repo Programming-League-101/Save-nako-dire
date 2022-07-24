@@ -12,7 +12,7 @@ def confirm():
     global confirm1
     confirm1 = tkinter.Toplevel()
     confirm1.geometry('500x500')
-    confirm1.title("Confirm")
+    confirm1.title("OTEN")
     canvas1 = tkinter.Canvas(confirm1, bg='gray', height=500, width=500)
     canvas1.pack()
 
